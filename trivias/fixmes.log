@@ -1,0 +1,33 @@
+Cisco ACI with SOC 7
+
+==================================================
+Error in DB Migration for apic-ml2-db-manage
+==================================================
+Command executed:
+"apic-ml2-db-manage --config-dir /etc/neutron/neutron.conf.d --config-file /etc/neutron/plugins/ml2/ml2_conf.ini --config-file /etc/neutron/plugins/ml2/ml2_conf_cisco_apic.ini upgrade head"
+
+Error: 
+ConfigParser.NoSectionError: No section: 'formatters' 
+
+Problem:
+Missing configurations for alembic migrations (alembic.ini)
+
+Solution:
+
+version 6.0.1
+Edit SOURCES.txt in neutron_ml2_apic_driver-egg.info/ to add this file (alembic.ini) explicitly
+Also add versions/ folder in migration/alembic_migrations/ (for avoiding future misses) and tar the folder again
+
+
+================================================================
+neutron-server does not start due to no connection to the fabric
+================================================================
+Problem:
+1. Cannot start neutron-server due to missing configuration in /etc/neutron/plugins/ml2/openvswitch_agent.ini.
+   Set of_interface = ovs-ofctl instead of blank (needed to be fixed in the neutron barclamp - cisco_apic_agents.rb)
+
+=================================================================
+
+
+
+
