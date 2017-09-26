@@ -1,4 +1,7 @@
 Cisco ACI with SOC 7
+====================
+Download rpms from updated repo:
+wget -r -N -np "http://download.opensuse.org/repositories/Cloud:/OpenStack:/Newton:/cisco-apic/SLE_12_SP2/"
 
 ==================================================
 Error in DB Migration for apic-ml2-db-manage
@@ -27,7 +30,21 @@ Problem:
    Set of_interface = ovs-ofctl instead of blank (needed to be fixed in the neutron barclamp - cisco_apic_agents.rb)
 
 =================================================================
+Instances cannot ping each other
+================================================================
+Config file (ml2_conf_cisco_apic.ini) not properly linked.
+Cloud 7 uses path /etc/neutron/neutron-server.conf.d/100-ml2_conf_cisco_apic.ini.conf and links to
+/etc/neutron/plugins/ml2/ml2_conf_cisco_apic.ini. 
 
+This can be fixed in the barclamp
+
+steps to realize the changes in the neutron server:
+--------------------------------------------------
+ifdown vlan.4093
+ifdown eth2
+ifup eth2
+ifup vlan.4093
+===============================================================
 
 
 
